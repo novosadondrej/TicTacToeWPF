@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Runtime.Remoting.Channels;
 
 namespace TicTacToeWPF
 {
@@ -30,6 +31,7 @@ namespace TicTacToeWPF
             x_win.IsEnabled = false;
             draw.IsEnabled = false;
             o_win.IsEnabled = false;
+            newGame(this, null);
         }
 
         private void Button_click(object sender, RoutedEventArgs e)
@@ -137,7 +139,7 @@ namespace TicTacToeWPF
 
             try
             {
-                move.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                 move.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); //problem
             }
             catch { }
         }
@@ -208,6 +210,9 @@ namespace TicTacToeWPF
 
         private Button hledaniRohu()
         {
+
+
+
             if (A1.Content == "O")
             {
                 if (A3.Content == "")
