@@ -47,9 +47,19 @@ namespace TicTacToeWPF
             pocetTahu++;
             winnerCheck();
 
+            if ((!tah) && (t2.Text.ToUpper() == "EASY"))
+            {
+                pcMoveEasy();
+            }
+
             if ((!tah) && (t2.Text.ToUpper() == "MID"))
             {
                 pcMoveMid();
+            }
+
+            if ((!tah) && (t2.Text.ToUpper() == "HARD"))
+            {
+                pcMoveHard();
             }
         }
 
@@ -123,6 +133,22 @@ namespace TicTacToeWPF
             }
         }
 
+        private void pcMoveEasy()
+        {
+            Button move = null;
+            move = hledaniRohu();
+            if (move == null)
+            {
+                move = volneMisto();
+            }
+            try
+            {
+                move.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+            catch { }
+
+        }
+
         private void pcMoveMid()
         {
             Button move = null;
@@ -139,9 +165,41 @@ namespace TicTacToeWPF
 
             try
             {
-                 move.RaiseEvent(new RoutedEventArgs(Button.ClickEvent)); //problem
+                 move.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
             catch { }
+        }
+        private void pcMoveHard()
+        {
+            Button move = null;
+
+            move = firstMoveO();
+            if (move == null)
+            {
+                move = winBlockCheck("O");
+                if (move == null)
+                {
+                    move = winBlockCheck("X");
+                    if (move == null)
+                    {
+                        move = secondMoveTactics("X");
+                        if (move == null)
+                        {
+                            
+                            move = hledaniRohu();
+                                
+                           
+                        }
+                    }
+                }
+            }
+
+            try
+            {
+                move.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+            catch { }
+
         }
 
    
@@ -207,6 +265,44 @@ namespace TicTacToeWPF
 
             return null;
         }
+        private Button firstMoveO()
+        {
+            if (B2.Content == "")
+                return B2;
+            else
+                return null;
+        }
+        private Button secondMoveTactics(string mark)
+        {
+            if ((A2.Content == mark) && (B1.Content == mark) && (A1.Content == ""))
+                return A1;
+            else if ((A2.Content == mark) && (B3.Content == mark) && (A3.Content == ""))
+                return A3;
+            else if ((B1.Content == mark) && (C2.Content == mark) && (C1.Content == ""))
+                return C1;
+            else if ((B3.Content == mark) && (C2.Content == mark) && (C3.Content == ""))
+                return C3;
+
+            else if ((A1.Content == mark) && (C3.Content == mark) && (A2.Content == ""))
+                return A2;
+            else if ((A3.Content == mark) && (C1.Content == mark) && (B1.Content == ""))
+                return B1;
+
+            else if ((A1.Content == mark) && (C2.Content == mark) && (C1.Content == ""))
+                return C1;
+            else if ((A3.Content == mark) && (C2.Content == mark) && (C3.Content == ""))
+                return C3;
+            else if ((C3.Content == mark) && (B1.Content == mark) && (C1.Content == ""))
+                return C1;
+            else if ((C3.Content == mark) && (A2.Content == mark) && (A3.Content == ""))
+                return A3;
+            else if ((C1.Content == mark) && (A2.Content == mark) && (A1.Content == ""))
+                return A1;
+            else if ((C1.Content == mark) && (B3.Content == mark) && (C3.Content == ""))
+                return C3;
+            else
+                return null;
+        }
 
         private Button hledaniRohu()
         {
@@ -263,6 +359,23 @@ namespace TicTacToeWPF
                 return C3;
 
             return null;
+        }
+
+        private Button volneMisto()
+        {
+
+            if (A2.Content == "")
+                return A2;
+            else if (B1.Content == "")
+                return B1;
+            else if (B2.Content == "")
+                return B2;
+            else if (B3.Content == "")
+                return B3;
+            else if (C2.Content == "")
+                return C2;
+            else
+                return null;
         }
 
         private void button_enter(object sender, EventArgs e)
