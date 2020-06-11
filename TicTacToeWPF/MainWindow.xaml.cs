@@ -34,7 +34,7 @@ namespace TicTacToeWPF
             newGame(this, null);
         }
 
-        private void Button_click(object sender, RoutedEventArgs e)
+        public void Button_click(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
             if (tah)
@@ -61,6 +61,7 @@ namespace TicTacToeWPF
             {
                 pcMoveHard();
             }
+
         }
 
         private void winnerCheck()
